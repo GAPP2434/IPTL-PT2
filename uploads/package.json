@@ -1,0 +1,29 @@
+{
+  "name": "iptl-pt2",
+  "version": "1.0.0",
+  "description": "CRUD App using Javascript and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GAPP2434/IPTL-PT2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/GAPP2434/IPTL-PT2/issues"
+  },
+  "homepage": "https://github.com/GAPP2434/IPTL-PT2#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.10.1",
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7"
+  }
+}
