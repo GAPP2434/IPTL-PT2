@@ -4,13 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for the toggle button
     const toggleButton = document.getElementById('toggle-student-list');
     const studentListContainer = document.getElementById('student-list-container');
+    const studentListSection = document.querySelector('.student-list-section');
 
     toggleButton.addEventListener('click', () => {
         if (studentListContainer.style.display === 'none') {
             studentListContainer.style.display = 'block';
+            toggleButton.classList.add('expanded');
+            studentListSection.classList.add('expanded');
             toggleButton.textContent = 'Hide Student List';
         } else {
             studentListContainer.style.display = 'none';
+            toggleButton.classList.remove('expanded');
+            studentListSection.classList.remove('expanded');
             toggleButton.textContent = 'Show Student List';
         }
     });
