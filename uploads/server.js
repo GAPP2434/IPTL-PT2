@@ -22,7 +22,7 @@ app.use(express.json());//Parse JSON bodies
 app.use(express.urlencoded({extended: true}));//Parse URL-encoded bodies
 app.use(cors());//Enable corss-origin resource sharing
 app.use(express.static(path.join(__dirname, '../public')));//Serve frontend files
-app.use('/uploads', express.static('uploads'));//Serve uploaded images
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Serve the index.html file for the root URL
 app.get('/', (req, res) => {
@@ -60,7 +60,7 @@ const Student = mongoose.model('Student', studentSchema);
 app.post('/students', upload.single('photo'), async (req, res) => {
     try {
         const { studentNumber, name, email, gender, contactNumber, address } = req.body;
-        const photo = req.file ? `/uploads/${req.file.filename}` : '';
+        const photo = req.file ? `/uploads/${req.file.filename}` : '/uploads/default.jpg';
 
         const newStudent = new Student({ studentNumber, name, email, gender, contactNumber, address, photo });
         await newStudent.save();
@@ -92,7 +92,7 @@ app.put('/students/:id', upload.single('photo'), async (req, res) => {
         }
 
         // Delete old image if new one is uploaded
-        if (req.file && student.photo) {
+        if (req.file && student.photo && student.photo !== '/uploads/default.jpg') {
             const oldImagePath = path.join(__dirname, student.photo);
             if (fs.existsSync(oldImagePath)) {
                 fs.unlinkSync(oldImagePath);
