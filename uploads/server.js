@@ -60,7 +60,7 @@ const Student = mongoose.model('Student', studentSchema);
 app.post('/students', upload.single('photo'), async (req, res) => {
     try {
         const { studentNumber, name, email, gender, contactNumber, address } = req.body;
-        const photo = req.file ? `/uploads/${req.file.filename}` : '/uploads/default.jpg';
+        const photo = req.file ? `/uploads/${req.file.filename}` : '/default.jpg';
 
         const newStudent = new Student({ studentNumber, name, email, gender, contactNumber, address, photo });
         await newStudent.save();
