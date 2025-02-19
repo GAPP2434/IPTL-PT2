@@ -48,22 +48,25 @@ const studentSchema = new mongoose.Schema({
     studentNumber: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
-    photo: {type: String}
+    gender: { type: String, required: true },
+    contactNumber: { type: String, required: true },
+    address: { type: String, required: true },
+    photo: { type: String }
 });
 
 const Student = mongoose.model('Student', studentSchema);
 
-//Create Student
+// Create Student
 app.post('/students', upload.single('photo'), async (req, res) => {
-    try{
-        const { studentNumber, name, email } = req.body;
+    try {
+        const { studentNumber, name, email, gender, contactNumber, address } = req.body;
         const photo = req.file ? `/uploads/${req.file.filename}` : '';
 
-        const newStudent = new Student({ studentNumber, name, email, photo });
+        const newStudent = new Student({ studentNumber, name, email, gender, contactNumber, address, photo });
         await newStudent.save();
         res.status(201).json(newStudent);
-    } catch (error){
-        res.status(500).json({ error: error.message});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 
@@ -78,34 +81,37 @@ app.get('/students', async (req, res) => {
 });
 
 
-//Update student
+// Update student
 app.put('/students/:id', upload.single('photo'), async (req, res) => {
-    try{
-        const { studentNumber, name, email } = req.body;
+    try {
+        const { studentNumber, name, email, gender, contactNumber, address } = req.body;
         const student = await Student.findById(req.params.id);
 
-        if(!student){
-            return res.status(404).json({ error: 'Student not found'});
+        if (!student) {
+            return res.status(404).json({ error: 'Student not found' });
         }
 
-        //Delete old image if new one is uploaded
-        if(req.file && student.photo){
+        // Delete old image if new one is uploaded
+        if (req.file && student.photo) {
             const oldImagePath = path.join(__dirname, student.photo);
-            if(fs.existsSync(oldImagePath)){
+            if (fs.existsSync(oldImagePath)) {
                 fs.unlinkSync(oldImagePath);
             }
         }
 
-        //Update student data
+        // Update student data
         student.studentNumber = studentNumber || student.studentNumber;
         student.name = name || student.name;
         student.email = email || student.email;
+        student.gender = gender || student.gender;
+        student.contactNumber = contactNumber || student.contactNumber;
+        student.address = address || student.address;
         student.photo = req.file ? `/uploads/${req.file.filename}` : student.photo;
 
         await student.save();
         res.json(student);
-    } catch (error){
-        res.status(500).json({ error: error.message});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 
