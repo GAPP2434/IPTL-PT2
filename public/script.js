@@ -119,7 +119,8 @@ async function loadStudents() {
             <td>${student.address}</td>
             <td><img src="${student.photo}" width="80" height="80" style="border-radius: 5px;"></td>
             <td>
-                <button onclick="editStudent('${student._id}', '${student.studentNumber}', '${student.name}', '${student.email}', '${student.gender}', '${student.contactNumber}', '${student.address}', '${student.photo}')">Edit</button>
+                <button onclick="editStudent('${student._id}', '${student.studentNumber}', '${student.name}', '${student.email}', 
+                '${student.gender}', '${student.contactNumber}', '${student.address}', '${student.photo}')">Edit</button>
                 <button onclick="deleteStudent('${student._id}')">Delete</button>
             </td>
         `;
